@@ -150,7 +150,7 @@ def calc_rmse(true, pred):
     print(pred)
     score = math.sqrt(np.mean((true-pred)**2))
     return score   
-    
+
 def calc_psnr(true, pred, pixel_max=1):
     np_true = np.array(true.cpu().detach())
     np_pred = np.array(pred.cpu().detach())
@@ -250,11 +250,24 @@ def calc_psnr_pixsh(sr, hr, scale, rgb_range, benchmark=True):
             diff = diff.sum(dim=1, keepdim=True)
     else:
         shave = scale + 6
-
-    valid = diff[:, :, shave:-shave, shave:-shave]
-    mse = valid.pow(2).mean()
-
-    return -10 * math.log10(mse)
+        
+def calc_psnr_pixsh(sr, hr, scale, rgb_range, benchmark=True):
+    psnr = 0
+    # diff = (sr - hr).data.div(rgb_range)
+    sr.data.div(rgb_range)
+    hr.data.div(rgb_range)
+    print(sr.shape, hr.shape)
+    hr = torch.unsqueeze(hr,0)
+    shave = scale + 6
+    sr = sr[:, :, shave:-shave, shave:-shave]
+    for i in range(2*shave-1):
+        for j in range(2*shave-1):
+            print(hr[:, :, i:-2*shave+i, j:-2*shave+j].shape)
+            print(shave)
+            valid = (sr-hr[:, :, i:-2*shave+i, j:-2*shave+j])
+            mse = valid.pow(2).mean()
+            if psnr < -10 * math.log10(mse):
+                psnr = -10* math.log10(mse)
 
 def make_optimizer(args, my_model):
     trainable = filter(lambda x: x.requires_grad, my_model.parameters())
