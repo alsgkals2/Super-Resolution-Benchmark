@@ -13,13 +13,14 @@ parser.add_argument('--n_threads', type=int, default=3,
                     help='number of threads for data loading')
 parser.add_argument('--cpu', action='store_true',
                     help='enables CUDA training')
-parser.add_argument('--n_GPUs', type=int, default=2,
-                    help='number of GPUs')
-parser.add_argument('--seed', type=int, default=1,
+parser.add_argument('--n_GPUs', type=int, default=2,help='the numbers of GPUs')
+parser.add_argument('--gpus', type=str, default='1,4',
+                    help='the numbers of GPUs')
+parser.add_argument('--seed', type=int, default=42,
                     help='random seed')
 
 # Data specifications
-parser.add_argument('--dir_data', type=str, default='/media/data1/mhkim/DS/',
+parser.add_argument('--dir_data', type=str, default='/media/data1/mhkim_server5/DS/',
                     help='dataset directory')
 parser.add_argument('--data_train', type=str, default='DIV2K',
                     help='train dataset name')
@@ -61,6 +62,7 @@ parser.add_argument('--noise', type=str, default='.',
 parser.add_argument('--act', type=str, default='relu',
                     help='activation function')
 parser.add_argument('--pre_train', type=str, default='./model/pretrained_EDSR.tar', help='pre-trained model directory')
+# parser.add_argument('--pre_train', type=str, default='', help='pre-trained model directory')
 
 parser.add_argument('--extend', type=str, default='.',
                     help='pre-trained model directory')
@@ -82,9 +84,11 @@ parser.add_argument('--test_every', type=int, default=1000,
                     help='do test per every N batches')
 parser.add_argument('--test_only', action='store_true',
                     help='set this option to test the model')
-parser.add_argument('--epochs', type=int, default=400,
+parser.add_argument('--epochs', type=int, default=150,
                     help='number of epochs to train')
-parser.add_argument('--resume', type=int, default=-1,
+# parser.add_argument('--resume', type=str,default = 'model_total_4_e146_te158.pth',## 158epoch까지학습하고 146epoch이 bestmodel임
+#                     help='load the model from the specified epoch')
+parser.add_argument('--resume', type=str,default = '',## 158epoch까지학습하고 146epoch이 bestmodel임
                     help='load the model from the specified epoch')
 parser.add_argument('--batch_size', type=int, default=16,
                     help='input batch size for training')
@@ -92,9 +96,9 @@ parser.add_argument('--self_ensemble', action='store_true',
                     help='use self-ensemble method for test')
 
 # Optimization specifications
-# parser.add_argument('--lr', type=float, default=2e-4,
-#                     help='learning rate')
-parser.add_argument('--lr', type=float, default=1e-5, help='learning rate')
+parser.add_argument('--lr', type=float, default=2e-4,
+                    help='learning rate')
+# parser.add_argument('--lr', type=float, default=1e-8, help='learning rate')
 parser.add_argument('--lr_decay', type=int, default=40,
                     help='learning rate decay per N epochs')
 parser.add_argument('--decay_type', type=str, default='step',

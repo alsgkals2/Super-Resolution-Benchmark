@@ -23,72 +23,7 @@ class CinCGAN():
                 init_method='tcp://127.0.0.1:3456',
                 world_size=ngpus_per_node,
                 rank=gpu)
-            
-        # torch.cuda.set_device(gpu)
 
-        # self.device = torch.device('cuda:'+ args.gpu if torch.cuda.is_available() else 'cpu')
-        # self.device = torch.device('cpu')
-    # parser.add_argument('--gpu', type=str, default='0', help='GPU idx')
-    # parser.add_argument('--inner_lr', type=float, default=2*1e-4, help='initial inner lr')
-    # parser.add_argument('--outer_lr', type=float, default=1e-4, help='initial outer lr')
-    # parser.add_argument('--decay_step', type=int, default=40000, help='decay step')
-    # parser.add_argument('--bsize', type=int, default=16, help='Batch size')
-    # parser.add_argument('--test_bsize', type=int, default=1, help='Test Batch size')
-    # parser.add_argument('--iteration', type=int, default=400000, help='iteration')
-    # parser.add_argument('--eps', type=float, default=1e-8, help='Adam eps')
-    # parser.add_argument('--w1', type=float, default=10.0, help='w1')
-    # parser.add_argument('--w2', type=float, default=5.0, help='w2')
-    # parser.add_argument('--w3', type=float, default=0.5, help='w3')
-    # parser.add_argument('--gamma0', type=float, default=1.0, help='gamma0')
-    # parser.add_argument('--gamma1', type=float, default=10.0, help='gamma1')
-    # parser.add_argument('--gamma2', type=float, default=5.0, help='gamma2')
-    # parser.add_argument('--gamma3', type=float, default=2.0, help='gamma3')
-    # parser.add_argument('--gamma4', type=float, default=0.0, help='gamma4')
-        inner_lr = 2*1e-4
-        outer_lr=1e-4
-        decay_step=40000
-        bsize=16
-        test_bsize=1
-        iteration=400000
-        eps=1e-8
-        w1=10.0
-        w2=5.0
-        w3=0.5
-        gamma0=1.0
-        gamma1=10.0
-        gamma2=5.0
-        gamma3=2.0
-        gamma4=0.0
-    # parser.add_argument('--train_s_path', type=str, default='/home/mhkim/SuperResolution/DS/DIV2K/DS_CinCGAN/train_x', help='train source dataset path')
-    # parser.add_argument('--train_t_path', type=str, default='/home/mhkim/SuperResolution/DS/DIV2K/DS_CinCGAN/train_z', help='train target dataset path')
-    # # parser.add_argument('--train_s_path', type=str, default='/mnt/nas/data/track1/Corrupted-tr-x/bicubic', help='train source dataset path')
-    # # parser.add_argument('--train_t_path', type=str, default='/mnt/nas/data/track1/Corrupted-tr-y', help='train target dataset path')
-    # parser.add_argument('--test_s_path', type=str, default='/home/mhkim/SuperResolution/DS/DIV2K/DS_CinCGAN/valid', help='test source dataset path')
-    # # parser.add_argument('--test_s_path', type=str, default='/mnt/nas/data/track1/Corrupted-va-x', help='test source dataset path')
-    # parser.add_argument('--test_t_path', type=str, default='/home/mhkim/SuperResolution/DS/DIV2K/DS_CinCGAN/valid_gt', help='test target dataset path')
-    # parser.add_argument('--ngpus_per_node', type=int, default=1, help='ngpus per node')
-    # parser.add_argument('--num_workers', type=int, default=4, help='number of workers')
-    # parser.add_argument('--resume', type=bool, default=False, help='resume or not')
-    # parser.add_argument('--resume_iter', type=int, default=1, help='resume iteration')
-    
-    # parser.add_argument('--neptune', type=bool, default=False, help='to use neptune or not')
-    # parser.add_argument('--save_freq', type=int, default=1000, help='checkpoint save frequency')
-    # parser.add_argument('--phase', type=str, default='train_inner', help='train_inner / train_outer / test_inner / test_outer')
-    # parser.add_argument('--scale_factor', type=int, default=4, help='scale factor : 2 / 4')
-    # parser.add_argument('--inner_ckpt_path', type=str, default='/mnt/nas/workspace/sr1/400000.pt', help='Inner cycle checkpoint file path for fine tuning')
-    # parser.add_argument('--outer_ckpt_path', type=str, default='/mnt/nas/workspace/sr1/EDSR_x4.pt', help='Outer cycle checkpoint file path for fine tuning')
-    # parser.add_argument('--skip_inner', type=bool, default=False, help='Not update inner cycle')
-    # parser.add_argument('--use_fid', type=bool, default=False, help='Whether to use fid or not')
-    # parser.add_argument('--fid_save_path', type=str, default='/mnt/nas/workspace/sr1/fid', help='Fid save path')
-    # parser.add_argument('--fid_s_path', type=str, default='/mnt/nas/data/sat_data/test/k3a/imgs', help='Fid source path')
-    # parser.add_argument('--fid_t_path', type=str, default='/mnt/nas/data/sat_data/test/wv3_cropped', help='Fid target path')
-    # parser.add_argument('--fid_bsize', type=int, default=128, help='FID batch size')
-    # parser.add_argument('--fid_freq', type=int, default=1000, help='FID frequency')
-    # parser.add_argument('--best_psnr', type=float, default=25.0, help='Best psnr')
-    # parser.add_argument('--ckpt_save_path', type=str, default='/mnt/nas/workspace/sr1', help='ckpt save path')
-    # parser.add_argument('--use_psnr', type=bool, default=True, help='Whether to use psnr or not')
-    # parser.add_argument('--psnr_freq', type=int, default=100, help='PSNR frequency')
-    # parser.add_argument('--max_hw', type=int, default=1000, help='Max test input image size')
         print("GPU : ", gpu)
         self.lr = args.inner_lr
         self.decay_step = args.decay_step
